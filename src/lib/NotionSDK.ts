@@ -98,20 +98,16 @@ export class NotionSDK implements INotionSDK {
     ): Promise<Array<IPage> | Error> {
         try {
             const data: {
-                filter: {
-                    value: any,
-                    property: any,
-                };
-                start_cursor?: string | undefined,
-            } = {
-                filter: {
-                    value: NotionObjectTypes.DATABASE,
-                    property: NotionObjectTypes.PROPERTY,
-                },
-            };
+                filter?: any;
+                start_cursor?: string | undefined;
+            } = {};
 
             if (cursor !== undefined) {
                 data.start_cursor = cursor;
+                data.filter = {
+                    value: NotionObjectTypes.DATABASE,
+                    property: NotionObjectTypes.PROPERTY,
+                }
             }
 
             const response = await this.http.post(NotionApi.SEARCH, {
