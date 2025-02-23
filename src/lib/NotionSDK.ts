@@ -97,13 +97,22 @@ export class NotionSDK implements INotionSDK {
         cursor?: string
     ): Promise<Array<IPage> | Error> {
         try {
-            const data = {
+            const data: {
                 filter: {
-                    value: NotionObjectTypes.PAGE,
+                    value: any,
+                    property: any,
+                };
+                start_cursor?: string | undefined,
+            } = {
+                filter: {
+                    value: NotionObjectTypes.DATABASE,
                     property: NotionObjectTypes.PROPERTY,
                 },
-                start_cursor: cursor,
             };
+
+            if (cursor !== undefined) {
+                data.start_cursor = cursor;
+            }
 
             const response = await this.http.post(NotionApi.SEARCH, {
                 data,
@@ -507,9 +516,13 @@ export class NotionSDK implements INotionSDK {
         cursor?: string
     ): Promise<Array<IPage | IDatabase> | Error> {
         try {
-            const data = {
-                start_cursor: cursor,
-            };
+            const data: {
+                start_cursor?: string;
+            } = {};
+
+            if (cursor !== undefined) {
+                data.start_cursor = cursor;
+            }
 
             const response = await this.http.post(NotionApi.SEARCH, {
                 data,

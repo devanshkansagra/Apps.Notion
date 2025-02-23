@@ -36,7 +36,7 @@ export async function searchPageOrDatabaseComponent(
 
     const options: StaticSelectOptionsParam = accesiblePagesAndDatabase.map(
         (item) => {
-            
+
             const info = NotionObjectTypes.INFO.toString();
             const name = NotionObjectTypes.NAME.toString();
 
@@ -51,17 +51,20 @@ export async function searchPageOrDatabaseComponent(
     );
 
     const dropDownOption = elementBuilder.createDropDownOptions(options);
-    const dropDown = elementBuilder.addDropDown(
-        {
-            placeholder: SearchPageAndDatabase.PLACEHOLDER,
-            options: dropDownOption,
-            dispatchActionConfig: [Modals.dispatchActionConfigOnSelect],
-        },
-        { blockId: SearchPageAndDatabase.BLOCK_ID, actionId }
-    );
     const inputBlock = blockBuilder.createInputBlock({
         text: SearchPageAndDatabase.LABEL,
-        element: dropDown,
+        element: {
+            type: 'static_select',
+            blockId: SearchPageAndDatabase.BLOCK_ID,
+            options: dropDownOption,
+            appId: app.getID(),
+            actionId: actionId,
+            placeholder: {
+                type: 'plain_text',
+                text: SearchPageAndDatabase.PLACEHOLDER,
+            },
+            dispatchActionConfig: [Modals.dispatchActionConfigOnSelect]
+        },
         optional: false,
     });
 

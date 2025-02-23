@@ -260,11 +260,8 @@ export class ExecuteBlockActionHandler {
         oAuth2Storage: OAuth2Storage,
         roomInteractionStorage: RoomInteractionStorage
     ) {
-        const { user } = this.context.getInteractionData();
         const PropertyName = `${DatabaseModal.PROPERTY_NAME_ACTION}-${uuid()}`;
-        const PropertyType = `${
-            DatabaseModal.PROPERTY_TYPE_SELECT_ACTION
-        }-${uuid()}`;
+        const PropertyType = `${DatabaseModal.PROPERTY_TYPE_SELECT_ACTION}-${uuid()}`;
 
         await modalInteraction.storeInteractionActionId({
             PropertyType,
@@ -911,7 +908,7 @@ export class ExecuteBlockActionHandler {
                 .getInteractionResponder()
                 .updateModalViewResponse(modal);
         }
-        
+
         // update the modal if database is selected
         const database = Object as IDatabase;
 

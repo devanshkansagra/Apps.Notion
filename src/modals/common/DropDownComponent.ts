@@ -37,18 +37,20 @@ export function DropDownComponent(
         dispatchActionConfig.push(Modals.dispatchActionConfigOnInput);
     }
 
-    const dropDown = elementBuilder.addDropDown(
-        {
-            placeholder,
-            options: dropDownOption,
-            dispatchActionConfig,
-            initialValue
-        },
-        { blockId, actionId }
-    );
     const inputBlock = blockBuilder.createInputBlock({
-        text,
-        element: dropDown,
+        text: text,
+        element: {
+            type: 'static_select',
+            blockId: blockId,
+            options: dropDownOption,
+            appId: app.getID(),
+            actionId: actionId,
+            placeholder: {
+                type: 'plain_text',
+                text: placeholder,
+            },
+            dispatchActionConfig: [Modals.dispatchActionConfigOnSelect]
+        },
         optional: false,
     });
 

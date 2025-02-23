@@ -39,19 +39,23 @@ export async function searchPageComponent(
         };
     });
     const dropDownOption = elementBuilder.createDropDownOptions(options);
-    const dropDown = elementBuilder.addDropDown(
-        {
-            placeholder: SearchPage.PLACEHOLDER,
-            options: dropDownOption,
-            dispatchActionConfig: [Modals.dispatchActionConfigOnSelect],
-        },
-        { blockId: SearchPage.BLOCK_ID, actionId }
-    );
     const inputBlock = blockBuilder.createInputBlock({
         text: SearchPage.LABEL,
-        element: dropDown,
+        element: {
+            type: 'static_select',
+            blockId: SearchPage.BLOCK_ID,
+            options: dropDownOption,
+            appId: app.getID(),
+            actionId: actionId,
+            placeholder: {
+                type: 'plain_text',
+                text: SearchPage.PLACEHOLDER,
+            },
+            dispatchActionConfig: [Modals.dispatchActionConfigOnSelect]
+        },
         optional: false,
     });
+
 
     return inputBlock;
 }
